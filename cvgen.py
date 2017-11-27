@@ -7,8 +7,10 @@ import csv
 import glob
 import json
 import urllib
-from random import shuffle
+from random import Random
 from shutil import copyfile
+
+RANDOM_SEED = 1984
 
 class Sample(object):
     def __init__(self, filename, text, up_votes, down_votes, age, gender, accent, duration):
@@ -183,8 +185,8 @@ def main():
     print('Dropped %d samples due to transcription issues.' % \
         (len(samples) - len(filtered_samples) - num_too_short))
 
-    samples = filtered_samples
-    shuffle(samples)
+    samples = sorted(filtered_samples, key=lambda sample: sample.filename)
+    Random(RANDOM_SEED).shuffle(samples)
 
     valid_samples = []
     other_samples = []
