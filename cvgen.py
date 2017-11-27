@@ -44,7 +44,7 @@ def _print_progress(iteration, total, prefix = 'Progress', suffix = 'complete', 
     print('\r%s |%s| %s%% %s' % (prefix, bar, percent, suffix), end = '\r')
     sys.stdout.flush()
     # Print New Line on Complete
-    if iteration == total: 
+    if iteration == total:
         print()
 
 replace = { \
@@ -99,6 +99,7 @@ def write_sets(root_dir, kind, samples):
     cols = [('', 100)] if kind == 'invalid' else collections
     for set_name, percent in cols:
         set_samples = samples[:int(len(samples)*percent/100.0)]
+        samples = samples[len(set_samples):]
         dir_name = 'cv-%s%s' % (kind, set_name)
         os.makedirs(root_dir + '/' + dir_name)
         csv_path = '%s.csv' % dir_name
